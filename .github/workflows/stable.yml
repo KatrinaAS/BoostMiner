@@ -29,4 +29,34 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          addLatest: true
+          tags: latest,${{ steps.release.outputs.version }}
+      - name: Get Conan
+        uses: turtlebrowser/get-conan@v1.0
+      - name: Create default profile
+        run: conan profile new default --detect
+      - name: Update profile 11
+        run: conan profile update settings.compiler.libcxx=libstdc++11 default
+      - name: Update profile version
+        run: conan profile update settings.compiler.version=10 default
+      - name: setup conan
+        run: |
+          conan config set general.revisions_enabled=True 
+          conan remote add proofofwork https://conan.pow.co/artifactory/api/conan/conan
+          conan user -p ${{ secrets.CONAN_USER_KEY }} -r proofofwork github
+          export CURRENT_VERSION="${{ steps.release.outputs.tag_name }}"
+          echo "Current version: ${CURRENT_VERSION}"
+      - name: prepare release package
+        run: |
+          mkdir build
+          cd build
+          conan install .. -r=proofofwork
+          cmake .. -DPACKAGE_TESTS=Off
+          cmake --build .
+          export CURRENT_VERSION="${{ steps.release.outputs.tag_name }}"
+          tar -czvf "BoostMiner-${CURRENT_VERSION}-linux.tar.gz" bin/*
+      - name: Upload release
+        uses: svenstaro/upload-release-action@v2
+        with:
+            tag: ${{ steps.release.outputs.tag_name }}
+            file: build/BoostMiner-${{ steps.release.outputs.tag_name }}-linux.tar.gz
+            asset_name: BoostMiner-${{ steps.release.outputs.tag_name }}-linux.tar.gz
