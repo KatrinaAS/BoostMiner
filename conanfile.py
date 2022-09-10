@@ -9,12 +9,12 @@ class BoostMinerConan(ConanFile):
     url = "https://github.com/ProofOfWorkCompany/BoostMiner"
     description = "Worker for Mining Boost Puzzles on Bitcoin"
     topics = ("bitcoin", "mining", "cpu", "sha256", "proofofwork", "boost")
-    settings = "os", "compiler", "build_type", "arch"
+    settings = "os", "compiler", "build_type", "arch"   
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
     generators = "cmake"
     exports_sources = "src/*"
-    requires = "gigamonkey/0.2.1@proofofwork/stable"
+    requires = "gigamonkey/v0.0.5@proofofwork/stable", "gtest/1.10.0"
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -22,7 +22,7 @@ class BoostMinerConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder="src")
+        cmake.configure()
         cmake.build()
 
     def package(self):

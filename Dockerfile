@@ -1,4 +1,4 @@
-FROM conanio/gcc9:latest
+FROM conanio/gcc10:latest
 
 WORKDIR /home/conan/
 
