@@ -16,39 +16,36 @@ We use conan package manager to install the dependencies and build the applicato
 
 ```
 ./BoostMiner help
-input should be "function" "args"... where function is 
+input should be "function" "args"... where function is
 	spend      -- create a Boost output.
 	redeem     -- mine and redeem an existing boost output.
-For function "spend", remaining inputs should be 
+For function "spend", remaining inputs should be
 	content    -- hex for correct order, hexidecimal for reversed.
-	difficulty -- 
+	difficulty --
 	topic      -- string max 20 bytes.
 	add. data  -- string, any size.
 	address    -- OPTIONAL. If provided, a boost contract output will be created. Otherwise it will be boost bounty.
-For function "redeem", remaining inputs should be 
+For function "redeem", remaining inputs should be
 	script     -- boost output script.
 	value      -- value in satoshis of the output.
 	txid       -- txid of the tx that contains this output.
 	index      -- index of the output within that tx.
 	wif        -- private key that will be used to redeem this output.
 	address    -- your address where you will put the redeemed sats.
-	
-wallet file format is json: 
+
+wallet file format is json:
 
 {
   'prevouts': [
     {
-      'txid': <hex string>       // 
-      'index': <number>          // 
+      'txid': <hex string>       //
+      'index': <number>          //
       'value': <number>          //
       'script': <hex string>     //
-    }, 
+    },
     ...                          // any number of these.
-  ], 
+  ],
   'key': <hd priv key string>    //
   'index': <number>              //
 }
 ```
-
-
-
