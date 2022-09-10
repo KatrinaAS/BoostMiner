@@ -31,4 +31,3 @@ set_target_properties(BoostMiner PROPERTIES CXX_EXTENSIONS ON)
 
 target_compile_features(CosmosWallet PUBLIC cxx_std_20)
 set_target_properties(CosmosWallet PROPERTIES CXX_EXTENSIONS ON)
-
