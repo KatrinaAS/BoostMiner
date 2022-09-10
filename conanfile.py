@@ -1,4 +1,4 @@
-from conans import ConanFile, CMake
+from conans import CMake, ConanFile
 
 
 class BoostMinerConan(ConanFile):
