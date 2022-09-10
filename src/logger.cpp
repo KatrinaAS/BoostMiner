@@ -2,7 +2,7 @@
 
 namespace logger {
 
-  void log(std::string event, json j) {
+void log(std::string event, json j) {
 
     boost::posix_time::ptime timestamp { boost::posix_time::microsec_clock::universal_time() };
 
@@ -11,7 +11,7 @@ namespace logger {
 
     std::cout << j.dump() << std::endl;
 
-  }
+}
 
 }
 

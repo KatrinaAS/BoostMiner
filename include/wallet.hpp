@@ -8,36 +8,36 @@
 using namespace Gigamonkey;
 
 struct p2pkh_prevout {
-    
+
     Gigamonkey::digest256 TXID;
     data::uint32 Index;
     Bitcoin::satoshi Value;
-    
+
     Gigamonkey::Bitcoin::secret Key;
-    
+
     explicit operator Bitcoin::prevout() const;
-    
+
 };
 
 struct wallet {
-    
+
     static constexpr double default_fee_rate = 0.5;
-    
+
     list<p2pkh_prevout> Prevouts;
     hd::bip32::secret Master;
     data::uint32 Index;
-    
+
     Bitcoin::satoshi value() const;
-    
+
     struct spent;
-    
+
     spent spend(Bitcoin::output to, double satoshis_per_byte = default_fee_rate) const;
     wallet add(const p2pkh_prevout &) const;
-    
+
     operator std::string() const;
-    
+
     static wallet read(std::string_view);
-    
+
 };
 
 std::ostream &operator<<(std::ostream &, wallet &);
