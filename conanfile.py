@@ -1,6 +1,7 @@
 from os import environ
 
-from conans import CMake, ConanFile
+from conans import CMake
+from conans import ConanFile
 
 
 class BoostMinerConan(ConanFile):
